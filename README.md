@@ -10,6 +10,10 @@ API Food Explorer para uma aplicação de menu e pedidos.
 - SQLite
 - SQLite3 (Driver)
 
+## Query Builder
+
+- Knex.js
+
 ## Licença
 
 Este projeto usa a licenciatura [MIT](./LICENSE)
