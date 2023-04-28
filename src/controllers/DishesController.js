@@ -106,23 +106,26 @@ class DishesController {
   }
 
   async index(request, response) {
-    const dishes = await knex("dishes").select("*");
+    const { category, ingredient, min_price, max_price } = request.query;
 
-    const dishesWithIngredients = await Promise.all(
-      dishes.map(async (dish) => {
-        const ingredients = await knex("ingredients")
-          .select("name")
-          .where("dish_id", dish.id);
+    let dishes;
+    if (category) {
+      dishes = await knex("dishes").where("category", "like", `%${category}%`);
+    } else if (ingredient) {
+      dishes = await knex("dishes")
+        .join("ingredients", "dishes.id", "=", "ingredients.dish_id")
+        .where("ingredients.name", "like", `%${ingredient}%`)
+        .distinct("dishes.*");
+    } else if (min_price || max_price) {
+      dishes = await knex('dishes')
+        .whereBetween('price', [min_price, max_price]);
+    } else {
+      dishes = await knex("dishes");
+    }
 
-        return {
-          ...dish,
-          ingredients: ingredients.map((ingredient) => ingredient.name),
-        };
-      })
-    );
-
-    return response.status(200).json(dishesWithIngredients);
+    return response.status(200).json(dishes);
   }
+
 
 }
 
