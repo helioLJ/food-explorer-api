@@ -4,7 +4,7 @@
   "description": "API Food Explorer para uma aplicação de menu e pedidos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/server.js"
   },
   "repository": {
     "type": "git",
