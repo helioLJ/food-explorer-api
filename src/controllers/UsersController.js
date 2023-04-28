@@ -1,3 +1,4 @@
+const { hash } = require("bcryptjs")
 const AppError = require("../utils/AppError")
 const knex = require("../database/knex");
 
@@ -5,7 +6,6 @@ class UsersController {
   async create(request, response) {
     const { name, email, password } = request.body
 
-    console.log({ name, email, password });
 
     if (!name || !email || !password) {
       throw new AppError("Todos os campos são obrigatórios.")
@@ -16,9 +16,11 @@ class UsersController {
       throw new AppError("Este e-mail já está em uso.", 409);
     }
 
-    await knex("users").insert({ name, email, password });
+    const hashedPassword = await hash(password, 8)
 
-    
+    await knex("users").insert({ name, email, password: hashedPassword });
+
+
     response.status(201).json({ message: "Usuário criado com sucesso!" })
   }
 }
