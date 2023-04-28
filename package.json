@@ -4,7 +4,8 @@
   "description": "API Food Explorer para uma aplicação de menu e pedidos.",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
   },
   "repository": {
     "type": "git",
