@@ -11,8 +11,8 @@
     "url": "git+https://github.com/helioLJ/food-explorer-api.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Hélio Lúcio",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/helioLJ/food-explorer-api/issues"
   },
