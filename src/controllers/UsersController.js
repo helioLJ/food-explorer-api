@@ -46,6 +46,9 @@ class UsersController {
       }
     }
 
+    user.name = name
+    user.email = email
+
     if (new_password && !old_password || !new_password && old_password) {
       throw new AppError("Preencha a senha antiga e a nova para mudar sua senha.")
     }
@@ -60,13 +63,39 @@ class UsersController {
       user.password = await hash(new_password, 8)
     }
 
-    user.name = name
-    user.email = email
-
     await knex("users").where("id", id).update(user);
 
 
     return response.status(200).json({ message: "Usuário editado com sucesso!" })
+  }
+
+  async delete(request, response) {
+    const { id } = request.params
+
+    const user = await knex("users").where("id", id).first()
+
+    if (!user) {
+      throw new AppError("Usuário não encontrado.", 404)
+    }
+
+    await knex("users").where("id", id).delete()
+
+    return response.status(200).json({ message: "Usuário deletado com sucesso!" })
+
+  }
+
+  async show(request, response) {
+    const { id } = request.params
+
+    const user = await knex("users").where("id", id).first()
+
+    if (!user) {
+      throw new AppError("Usuário não encontrado.", 404)
+    }
+
+    const { password, ...userData } = user
+
+    return response.status(200).json(userData)
   }
 }
 
