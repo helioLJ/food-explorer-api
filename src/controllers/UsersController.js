@@ -1,24 +1,25 @@
 const { hash, compare } = require("bcryptjs")
 const AppError = require("../utils/AppError")
-const knex = require("../database/knex");
+const UserRepository = require("../repositories/UserRepository")
 
 class UsersController {
   async create(request, response) {
     const { name, email, password } = request.body
+    const userRepository = new UserRepository()
 
 
     if (!name || !email || !password) {
       throw new AppError("Todos os campos são obrigatórios.")
     }
 
-    const user = await knex("users").where("email", email).first();
+    const user = await userRepository.findByEmail(email)
     if (user) {
-      throw new AppError("Este e-mail já está em uso.", 409);
+      throw new AppError("Este e-mail já está em uso.", 409)
     }
 
     const hashedPassword = await hash(password, 8)
 
-    await knex("users").insert({ name, email, password: hashedPassword });
+    await userRepository.create(name, email, hashedPassword)
 
 
     response.status(201).json({ message: "Usuário criado com sucesso!" })
@@ -27,20 +28,21 @@ class UsersController {
   async update(request, response) {
     const { name, email, old_password, new_password } = request.body
     const user_id = request.user.id
+    const userRepository = new UserRepository()
 
 
     if (!name || !email) {
       throw new AppError("Os campos não podem estar vazios.")
     }
 
-    const user = await knex("users").where("id", user_id).first();
+    const user = await userRepository.findById(user_id)
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)
     }
 
     if (email !== user.email) {
-      const userWithEmail = await knex("users").where("email", email).first();
+      const userWithEmail = await userRepository.findByEmail(email)
       if (userWithEmail) {
         throw new AppError("O email informado já está em uso por outro usuário.");
       }
@@ -63,7 +65,7 @@ class UsersController {
       user.password = await hash(new_password, 8)
     }
 
-    await knex("users").where("id", user_id).update(user);
+    await userRepository.update(user_id, user)
 
 
     return response.status(200).json({ message: "Usuário editado com sucesso!" })
@@ -71,14 +73,15 @@ class UsersController {
 
   async delete(request, response) {
     const user_id = request.user.id
+    const userRepository = new UserRepository()
 
-    const user = await knex("users").where("id", user_id).first()
+    const user = await userRepository.findById(user_id)
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)
     }
 
-    await knex("users").where("id", user_id).delete()
+    await userRepository.delete(user_id)
 
     return response.status(200).json({ message: "Usuário deletado com sucesso!" })
 
@@ -86,8 +89,9 @@ class UsersController {
 
   async show(request, response) {
     const user_id = request.user.id
+    const userRepository = new UserRepository()
 
-    const user = await knex("users").where("id", user_id).first()
+    const user = await userRepository.findById(user_id)
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)

@@ -1,12 +1,14 @@
 require("express-async-errors")
 
 const AppError = require("./utils/AppError")
+const cors = require("cors")
 const express = require("express")
 const uploadConfig = require("./configs/upload")
 
 const routes = require("./routes")
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
