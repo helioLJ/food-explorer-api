@@ -33,6 +33,9 @@ class UserUpdateService {
 
     if (new_password && old_password) {
       const checkOldPassword = await compare(old_password, user.password)
+      console.log(old_password);
+      console.log(user.password);
+      console.log(checkOldPassword);
 
       if (!checkOldPassword) {
         throw new AppError("A senha antiga não confere.")

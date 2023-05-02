@@ -11,7 +11,6 @@ class DishRepository {
 
   async create(name, description, image_url, price, category) {
     const [dish] = await knex("dishes").insert({ name, description, image_url, price, category })
-    console.log(dish);
     return dish
   }
 
