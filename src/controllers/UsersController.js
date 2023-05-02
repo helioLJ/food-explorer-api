@@ -1,11 +1,11 @@
 const UserRepository = require("../repositories/UserRepository")
+const userRepository = new UserRepository()
 
 const UserCreateService = require("../services/User/UserCreateService")
 const UserUpdateService = require("../services/User/UserUpdateService")
 const UserDeleteService = require("../services/User/UserDeleteService")
 const UserShowService = require("../services/User/UserShowService")
 
-const userRepository = new UserRepository()
 
 class UsersController {
   async create(request, response) {
