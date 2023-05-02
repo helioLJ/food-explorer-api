@@ -4,63 +4,71 @@
 API Food Explorer para uma aplicação de menu e pedidos.
 
 
-## Rotas e seus métodos
+# Rotas e seus métodos
 
-### /users
+# /users
 
 > **GET**
 > Retorna um usuário
 
-```json
-  BASE_URL/users/:id
-```
-```json
-{
-	"id": 3,
-	"name": "Joao",
-	"email": "Joao@email.com",
-	"created_at": "2023-04-28 20:27:10",
-	"updated_at": "2023-04-28 20:27:10"
-}
-```
+> **Delete**
+> Deleta um usuário
 
 > **POST**
 > Cria um usuário
 
-```json
-  BASE_URL/users
-```
-Exemplo de body:
-```json
-{
-	"name": "Joao",
-	"email": "Joao@email.com",
-	"password": "123"
-}
-```
-
 > **PUT**
 > Edita um usuário
 
-```json
-  BASE_URL/users/:id
-```
-Exemplo de body:
-```json
-{
-	"name": "Joao",
-	"email": "Joao@email.com",
-	"old_password": "123",
-	"new_password": "1234"
-}
-```
+# /sessions
+
+> **POST**
+> Cria um sessão  de usuário
+
+# /dishes
+
+> **GET**
+> Retorna todos os pratos
+
+> **GET/:dish_id**
+> Retorna um prato
+
+> **Delete/:dish_id**
+> Deleta um prato
+
+> **POST**
+> Cria um prato
+
+> **PUT/:dish_id**
+> Edita um prato
+
+# /favorites
+
+> **GET**
+> Retorna todos os favoritos
 
 > **Delete**
-> Deleta um usuário
+> Deleta um favorito
 
-```json
-  BASE_URL/users/:id
-```
+> **POST**
+> Cria um favorito
+
+# /orders
+
+> **GET/**
+> Retorna todos os pedidos
+
+> **GET/:order_id**
+> Retorna um pedido
+
+> **Delete/:order_id**
+> Deleta um pedido
+
+> **POST/:dish_id**
+> Cria um pedido com um prato
+
+> **PUT/:order_id**
+> Edita um pedido
 
 
 <!-- ### Bibliotecas 
@@ -68,6 +76,7 @@ Exemplo de body:
 - Express
 - Express Async Errors
 - Bcrypt.js
+- jsonwebtoken (JSON)
 
 ### DevDependencies
 
@@ -75,7 +84,6 @@ Exemplo de body:
 
 ## Banco de Dados
 
-- SQLite
 - SQLite3 (Driver)
 
 ## Query Builder

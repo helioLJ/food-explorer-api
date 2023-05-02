@@ -3,8 +3,9 @@ const knex = require("../database/knex");
 
 class OrdersController {
   async create(request, response) {
-    const { user_id } = request.params
-    const { dish_id } = request.body
+    const { dish_id } = request.params
+    const user_id = request.user.id
+
 
     try {
       // Cria um pedido na tabela "orders"
@@ -29,7 +30,6 @@ class OrdersController {
       throw new AppError(err.message, 500)
     }
   }
-
 
   async update(request, response) {
     const { order_id } = request.params;
@@ -61,7 +61,6 @@ class OrdersController {
     return response.status(200).json({ message: "Pedido editado com sucesso!" });
   }
 
-
   async show(request, response) {
     const { order_id } = request.params;
 
@@ -82,7 +81,8 @@ class OrdersController {
   }
 
   async delete(request, response) {
-    const { dish_id, order_id } = request.body;
+    const { dish_id } = request.body;
+    const { order_id } = request.params;
   
     await knex('ordersDishes')
       .where({ dish_id, order_id })
@@ -91,9 +91,8 @@ class OrdersController {
     return response.status(200).json({ message: "Prato removido com sucesso do pedido!" });
   }
   
-
   async index(request, response) {
-    const { user_id } = request.params;
+    const user_id = request.user.id
 
     const orders = await knex("orders")
       .select("*")

@@ -29,7 +29,7 @@ class DishesController {
 
   async update(request, response) {
     const { name, description, image_url, price, category, ingredients } = request.body
-    const { id } = request.params
+    const { dish_id } = request.params
 
 
     if (!name || !image_url || !price || ingredients.length === 0) {
@@ -39,7 +39,7 @@ class DishesController {
     if (dishName) {
       throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
     }
-    const dish = await knex("dishes").where("id", id).first();
+    const dish = await knex("dishes").where("id", dish_id).first();
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)
     }
@@ -50,12 +50,12 @@ class DishesController {
     dish.price = price
     dish.category = category
 
-    const currentIngredients = await knex("ingredients").where("dish_id", id);
+    const currentIngredients = await knex("ingredients").where("dish_id", dish_id);
     const newIngredientsInsert = ingredients.filter(ingredient => {
       return !currentIngredients.some(currentIngredient => currentIngredient.name === ingredient);
     }).map(ingredient => {
       return {
-        dish_id: id,
+        dish_id,
         name: ingredient
       };
     });
@@ -68,37 +68,37 @@ class DishesController {
       }));
     }
     await knex("ingredients").insert(newIngredientsInsert);
-    await knex("dishes").where("id", id).update(dish);
+    await knex("dishes").where("id", dish_id).update(dish);
 
 
     return response.status(200).json({ message: "Prato editado com sucesso!" })
   }
 
   async delete(request, response) {
-    const { id } = request.params
+    const { dish_id } = request.params
 
-    const dish = await knex("dishes").where("id", id).first()
+    const dish = await knex("dishes").where("id", dish_id).first()
 
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)
     }
 
-    await knex("dishes").where("id", id).delete()
+    await knex("dishes").where("id", dish_id).delete()
 
     return response.status(200).json({ message: "Prato deletado com sucesso!" })
 
   }
 
   async show(request, response) {
-    const { id } = request.params
+    const { dish_id } = request.params
 
-    const dish = await knex("dishes").where("id", id).first()
+    const dish = await knex("dishes").where("id", dish_id).first()
 
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)
     }
 
-    const ingredients = await knex("ingredients").select("name").where("dish_id", id)
+    const ingredients = await knex("ingredients").select("name").where("dish_id", dish_id)
     const dishWithIngredients = { ...dish, ingredients: ingredients.map(ingredient => ingredient.name) }
 
     return response.status(200).json(dishWithIngredients)
@@ -125,8 +125,6 @@ class DishesController {
 
     return response.status(200).json(dishes);
   }
-
-
 }
 
 module.exports = DishesController

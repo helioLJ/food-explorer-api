@@ -3,7 +3,8 @@ const knex = require("../database/knex");
 
 class FavoritesController {
   async create(request, response) {
-    const { user_id, dish_id } = request.body
+    const user_id = request.user.id
+    const { dish_id } = request.params
 
     // Verifica se o prato e o usuário existem
     const dish = await knex("dishes").where("id", dish_id).first()
@@ -33,7 +34,8 @@ class FavoritesController {
   }
 
   async delete(request, response) {
-    const { user_id, dish_id } = request.body;
+    const user_id = request.user.id
+    const { dish_id } = request.params;
 
     if (!user_id || !dish_id) {
       throw new AppError("Os campos user_id e dish_id são obrigatórios", 400);
@@ -63,7 +65,7 @@ class FavoritesController {
   }
 
   async show(request, response) {
-    const { user_id } = request.params;
+    const user_id = request.user.id
 
     // Busca os dish_id favoritados pelo usuário
     const favorites = await knex("favorites").where("user_id", user_id).select("dish_id");

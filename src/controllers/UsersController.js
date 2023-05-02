@@ -26,14 +26,14 @@ class UsersController {
 
   async update(request, response) {
     const { name, email, old_password, new_password } = request.body
-    const { id } = request.params
+    const user_id = request.user.id
 
 
     if (!name || !email) {
       throw new AppError("Os campos não podem estar vazios.")
     }
 
-    const user = await knex("users").where("id", id).first();
+    const user = await knex("users").where("id", user_id).first();
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)
@@ -63,31 +63,31 @@ class UsersController {
       user.password = await hash(new_password, 8)
     }
 
-    await knex("users").where("id", id).update(user);
+    await knex("users").where("id", user_id).update(user);
 
 
     return response.status(200).json({ message: "Usuário editado com sucesso!" })
   }
 
   async delete(request, response) {
-    const { id } = request.params
+    const user_id = request.user.id
 
-    const user = await knex("users").where("id", id).first()
+    const user = await knex("users").where("id", user_id).first()
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)
     }
 
-    await knex("users").where("id", id).delete()
+    await knex("users").where("id", user_id).delete()
 
     return response.status(200).json({ message: "Usuário deletado com sucesso!" })
 
   }
 
   async show(request, response) {
-    const { id } = request.params
+    const user_id = request.user.id
 
-    const user = await knex("users").where("id", id).first()
+    const user = await knex("users").where("id", user_id).first()
 
     if (!user) {
       throw new AppError("Usuário não encontrado.", 404)
