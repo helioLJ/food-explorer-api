@@ -1,30 +1,18 @@
-const AppError = require("../utils/AppError")
-const knex = require("../database/knex");
 const DishRepository = require("../repositories/DishRepository")
+const dishRepository = new DishRepository()
+
+const DishCreateService = require("../services/Dish/DishCreateService")
+const DishUpdateService = require("../services/Dish/DishUpdateService")
+const DishDeleteService = require("../services/Dish/DishDeleteService")
+const DishShowService = require("../services/Dish/DishShowService")
+const DishIndexService = require("../services/Dish/DishIndexService")
 
 class DishesController {
   async create(request, response) {
     const { name, description, image_url, price, category, ingredients } = request.body
-    const dishRepository = new DishRepository()
 
-    if (!name || !price || ingredients.length === 0) {
-      throw new AppError("Preencha os campos obrigatórios.")
-    }
-    const dish = await dishRepository.findByName(name)
-    if (dish) {
-      throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
-    }
-
-    const dish_id = await dishRepository.create(name, description, image_url, price, category)
-
-    const ingredientsInsert = ingredients.map(ingredient => {
-      return {
-        dish_id,
-        name: ingredient
-      }
-    })
-    await dishRepository.insertIngredients(ingredientsInsert)
-
+    const dishCreateService = new DishCreateService(dishRepository)
+    await dishCreateService.execute(name, description, image_url, price, category, ingredients)
 
     response.status(201).json({ message: "Prato criado com sucesso!" })
   }
@@ -32,64 +20,18 @@ class DishesController {
   async update(request, response) {
     const { name, description, image_url, price, category, ingredients } = request.body
     const { dish_id } = request.params
-    const dishRepository = new DishRepository()
 
-
-    if (!name || !image_url || !price || ingredients.length === 0) {
-      throw new AppError("Preencha os campos obrigatórios.")
-    }
-    const dishName = await dishRepository.findByName(name)
-    if (dishName) {
-      throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
-    }
-    const dish = await dishRepository.findById(dish_id)
-    if (!dish) {
-      throw new AppError("Prato não encontrado.", 404)
-    }
-
-    dish.name = name
-    dish.description = description
-    dish.image_url = image_url
-    dish.price = price
-    dish.category = category
-
-    const currentIngredients = await dishRepository.getIngredients(dish_id)
-    const newIngredientsInsert = ingredients.filter(ingredient => {
-      return !currentIngredients.some(currentIngredient => currentIngredient.name === ingredient);
-    }).map(ingredient => {
-      return {
-        dish_id,
-        name: ingredient
-      };
-    });
-    const currentIngredientsDelete = currentIngredients.filter(currentIngredient => {
-      return !ingredients.some(ingredient => ingredient === currentIngredient.name);
-    });
-    if (currentIngredientsDelete.length > 0) {
-      await Promise.all(currentIngredientsDelete.map(currentIngredient => {
-        return dishRepository.findIngredientById(currentIngredient.id)
-      }));
-    }
-
-    await dishRepository.insertIngredients(newIngredientsInsert)
-    await dishRepository.update(dish_id, dish)
-
+    const dishUpdateService = new DishUpdateService(dishRepository)
+    await dishUpdateService.execute(name, description, image_url, price, category, ingredients, dish_id)
 
     return response.status(200).json({ message: "Prato editado com sucesso!" })
   }
 
   async delete(request, response) {
     const { dish_id } = request.params
-    const dishRepository = new DishRepository()
 
-
-    const dish = await dishRepository.findById(dish_id)
-
-    if (!dish) {
-      throw new AppError("Prato não encontrado.", 404)
-    }
-
-    await dishRepository.delete(dish_id)
+    const dishDeleteService = new DishDeleteService(dishRepository)
+    await dishDeleteService.execute(dish_id)
 
     return response.status(200).json({ message: "Prato deletado com sucesso!" })
 
@@ -97,16 +39,9 @@ class DishesController {
 
   async show(request, response) {
     const { dish_id } = request.params
-    const dishRepository = new DishRepository()
 
-    const dish = await dishRepository.findById(dish_id)
-
-    if (!dish) {
-      throw new AppError("Prato não encontrado.", 404)
-    }
-
-    const ingredients = await dishRepository.getIngredientsName(dish_id)
-    const dishWithIngredients = { ...dish, ingredients: ingredients.map(ingredient => ingredient.name) }
+    const dishShowService = new DishShowService(dishRepository)
+    const dishWithIngredients = await dishShowService.execute(dish_id)
 
     return response.status(200).json(dishWithIngredients)
 
@@ -114,19 +49,9 @@ class DishesController {
 
   async index(request, response) {
     const { category, ingredient, min_price, max_price } = request.query;
-    const dishRepository = new DishRepository()
 
-    let dishes;
-    if (category) {
-      dishes = await dishRepository.queryByCategory(category)
-    } else if (ingredient) {
-      dishes = await dishRepository.queryByIngredient(ingredient)
-    } else if (min_price || max_price) {
-      dishes = await knex('dishes')
-        .whereBetween('price', [min_price, max_price]);
-    } else {
-      dishes = await dishRepository.getAll()
-    }
+    const dishIndexService = new DishIndexService(dishRepository)
+    const dishes = await dishIndexService.execute(category, ingredient, min_price, max_price)
 
     return response.status(200).json(dishes);
   }
