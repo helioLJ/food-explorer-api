@@ -9,6 +9,6 @@ const favoritesController = new FavoritesController()
 
 favoritesRoutes.post("/:dish_id", ensureAuthenticated, favoritesController.create)
 favoritesRoutes.delete("/:dish_id", ensureAuthenticated, favoritesController.delete)
-favoritesRoutes.get("/", ensureAuthenticated, favoritesController.show)
+favoritesRoutes.get("/", ensureAuthenticated, favoritesController.index)
 
 module.exports = favoritesRoutes
