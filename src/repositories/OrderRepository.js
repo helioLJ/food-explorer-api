@@ -26,10 +26,18 @@ class OrderRepository {
       .where({ user_id });
   }
 
-  async verifyDish(order_id, dish_id) {
+  async verifyDishByOrder(order_id, dish_id) {
     return await knex('ordersDishes')
       .where({ order_id, dish_id })
       .first();
+  }
+
+  async verifyDish(dish_id) {
+    return await knex("dishes").where("id", dish_id).first()
+  }
+
+  async verifyUser(user_id) {
+    return await knex("users").where("id", user_id).first()
   }
 
   async updateQuantity(orderDishId, quantity) {

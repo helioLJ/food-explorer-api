@@ -1,5 +1,4 @@
 const AppError = require("../../utils/AppError")
-const FavoriteRepository = require("../../repositories/FavoriteRepository")
 
 class OrderCreateService {
   constructor(orderRepository) {
@@ -8,9 +7,8 @@ class OrderCreateService {
 
   async execute(dish_id, user_id) {
 
-    const favoriteRepository = new FavoriteRepository()
-    const dish = await favoriteRepository.verifyDish(dish_id)
-    const user = await favoriteRepository.verifyUser(user_id)
+    const dish = await this.orderRepository.verifyDish(dish_id)
+    const user = await this.orderRepository.verifyUser(user_id)
 
     if (!dish || !user) {
       throw new AppError("Prato ou usuário não encontrado.", 404)

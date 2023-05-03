@@ -10,10 +10,12 @@ class DishUpdateService {
     if (!name || !image_url || !price || ingredients.length === 0) {
       throw new AppError("Preencha os campos obrigatórios.")
     }
+
     const dishName = await this.dishRepository.findByName(name)
     if (dishName && dishName.id === dish_id) {
       throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
     }
+
     const dish = await this.dishRepository.findById(dish_id)
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)

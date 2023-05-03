@@ -15,11 +15,11 @@ class DishCreateService {
       throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
     }
 
-    const dish_id = await this.dishRepository.create(name, description, image_url, price, category)
+    const dishCreated = await this.dishRepository.create(name, description, image_url, price, category)
 
     const ingredientsInsert = ingredients.map(ingredient => {
       return {
-        dish_id,
+        dish_id: dishCreated.id,
         name: ingredient
       }
     })
