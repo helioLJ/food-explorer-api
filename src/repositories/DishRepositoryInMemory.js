@@ -59,7 +59,6 @@ class DishRepositoryInMemory {
   }
 
   async insertIngredients(ingredientsInsert) {
-
     const ingredients = ingredientsInsert.map((i, index) => {
       return ({
         id: index + 1,
@@ -77,7 +76,7 @@ class DishRepositoryInMemory {
   }
 
   async getIngredientsName(dish_id) {
-    return this.ingredients.filter(i => i.dish_id === dish_id).map(i => i.name);
+    return this.ingredients.filter(i => i.dish_id === dish_id).map(i => i);
   }
 
   async findIngredientById(currentIngredientId) {

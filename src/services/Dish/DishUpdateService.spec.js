@@ -57,7 +57,7 @@ describe("Dish Update Service", () => {
     )).rejects.toEqual(new AppError("Preencha os campos obrigatórios."))
   })
 
-  it("should throw an error if trying to update a dish with an existing name", async () => {
+  it("should not update dish with an existing name", async () => {
     const dish1 = {
       name: "Test Dish",
       description: "Test description",
@@ -100,7 +100,7 @@ describe("Dish Update Service", () => {
     )).rejects.toEqual(new AppError("Já existe um prato cadastrado com esse nome.", 409));
   });
 
-  it("should throw an error if dish with given id is not found", async () => {
+  it("should not update dish with given id is not found", async () => {
     const dish = {
       name: "Test Dish",
       description: "Test description",
@@ -181,5 +181,4 @@ describe("Dish Update Service", () => {
 
     expect(ingredientsResultFormatted).toEqual(expect.arrayContaining(expectedIngredients))
   })
-
 })

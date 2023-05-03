@@ -1,7 +1,50 @@
 class OrderRepositoryInMemory {
   constructor() {
-    this.orders = [];
-    this.ordersDishes = [];
+    this.orders = [
+      {
+        id: 201,
+        user_id: 201,
+        status: "Pendente",
+      }
+    ];
+    this.ordersDishes = [
+      {
+        id: 201,
+        dish_id: 201,
+        order_id: 201,
+        quantity: 1
+      },
+      {
+        id: 201,
+        dish_id: 202,
+        order_id: 201,
+        quantity: 1
+      },
+    ];
+    this.users = [{
+      name: "User Test",
+      email: "user@test.com",
+      password: "123",
+      id: 201
+    }];
+    this.dishes = [{
+      name: "Test Dish 1",
+      description: "Test description",
+      image_url: "",
+      price: 10.5,
+      category: "Test category",
+      ingredients: ["Ingredient 1", "Ingredient 2"],
+      id: 201
+    },
+    {
+      name: "Test Dish 2",
+      description: "Test description",
+      image_url: "",
+      price: 10.5,
+      category: "Test category",
+      ingredients: ["Ingredient 1", "Ingredient 2"],
+      id: 202
+    }];
   }
 
   async create(dish_id, user_id) {
@@ -36,11 +79,11 @@ class OrderRepositoryInMemory {
   }
 
   async verifyDish(dish_id) {
-    return dishes.find(d => d.id === dish_id);
+    return this.dishes.find(d => d.id === dish_id);
   }
 
   async verifyUser(user_id) {
-    return users.find(u => u.id === user_id);
+    return this.users.find(u => u.id === user_id);
   }
 
   async updateQuantity(orderDishId, quantity) {
@@ -64,7 +107,7 @@ class OrderRepositoryInMemory {
   async getAllDishes(order_id) {
     return this.ordersDishes.filter(od => od.order_id === order_id)
       .map(od => ({
-        name: dishes.find(d => d.id === od.dish_id)?.name,
+        name: this.dishes.find(d => d.id === od.dish_id)?.name,
         quantity: od.quantity
       }));
   }

@@ -1,5 +1,3 @@
-const AppError = require("../../utils/AppError")
-
 class DishIndexService {
   constructor(dishRepository) {
     this.dishRepository = dishRepository

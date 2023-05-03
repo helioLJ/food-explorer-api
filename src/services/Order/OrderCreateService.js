@@ -14,7 +14,7 @@ class OrderCreateService {
       throw new AppError("Prato ou usuário não encontrado.", 404)
     }
 
-    await this.orderRepository.create(dish_id, user_id)
+    return await this.orderRepository.create(dish_id, user_id)
   }
 }
 

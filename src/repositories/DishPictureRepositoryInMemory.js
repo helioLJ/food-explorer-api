@@ -1,7 +1,20 @@
 class DishPictureRepositoryInMemory {
   constructor() {
-    this.users = [];
-    this.dishes = [];
+    this.users = [{
+      name: "User Test",
+      email: "user@test.com",
+      password: "123",
+      id: 1
+    }];
+    this.dishes = [{
+      name: "Test Dish",
+      description: "Test description",
+      image_url: "",
+      price: 10.5,
+      category: "Test category",
+      ingredients: ["Ingredient 1", "Ingredient 2"],
+      id: 1
+    }];
   }
 
   async findUserById(user_id) {

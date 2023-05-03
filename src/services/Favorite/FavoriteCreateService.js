@@ -7,8 +7,10 @@ class FavoriteCreateService {
 
   async execute(user_id, dish_id) {
 
+
     const dish = await this.favoriteRepository.verifyDish(dish_id)
     const user = await this.favoriteRepository.verifyUser(user_id)
+
 
     if (!dish || !user) {
       throw new AppError("Prato ou usuário não encontrado.", 404)
