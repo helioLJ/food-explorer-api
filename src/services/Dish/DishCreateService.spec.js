@@ -72,6 +72,30 @@ describe("Dish Create Service", () => {
     )).rejects.toEqual(new AppError("Preencha os campos obrigatórios."))
   })
 
+  it("should not create dish with same name as an existing one", async () => {
+    const dish = {
+      name: "Test dish",
+      description: "Test description",
+      image_url: "http://test.com/image.jpg",
+      price: 10.5,
+      category: "Test category",
+      ingredients: ["Ingredient 1", "Ingredient 2"]
+    }
+
+    // create an initial dish with the same name
+    await dishRepositoryInMemory.create(dish.name, "Another description", "http://test.com/another_image.jpg", 15.5, "Another category")
+
+    // attempt to create the dish with the same name
+    await expect(dishCreateService.execute(
+      dish.name,
+      dish.description,
+      dish.image_url,
+      dish.price,
+      dish.category,
+      dish.ingredients
+    )).rejects.toEqual(new AppError("Já existe um prato cadastrado com esse nome.", 409))
+  })
+  
   it("should create a new dish if all fields are valid", async () => {
     const dish = {
       name: "Test dish",
@@ -102,28 +126,4 @@ describe("Dish Create Service", () => {
     expect(createdDish.category).toEqual(dish.category);
     expect(createdIngredients.length).toEqual(dish.ingredients.length);
   });
-
-  it("should not create dish with same name as an existing one", async () => {
-    const dish = {
-      name: "Test dish",
-      description: "Test description",
-      image_url: "http://test.com/image.jpg",
-      price: 10.5,
-      category: "Test category",
-      ingredients: ["Ingredient 1", "Ingredient 2"]
-    }
-
-    // create an initial dish with the same name
-    await dishRepositoryInMemory.create(dish.name, "Another description", "http://test.com/another_image.jpg", 15.5, "Another category")
-
-    // attempt to create the dish with the same name
-    await expect(dishCreateService.execute(
-      dish.name,
-      dish.description,
-      dish.image_url,
-      dish.price,
-      dish.category,
-      dish.ingredients
-    )).rejects.toEqual(new AppError("Já existe um prato cadastrado com esse nome.", 409))
-  })
 })

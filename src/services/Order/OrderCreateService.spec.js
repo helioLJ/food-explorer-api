@@ -6,10 +6,21 @@ const OrderRepositoryInMemory = require("../../repositories/OrderRepositoryInMem
 describe("OrderCreateService", () => {
   let orderRepositoryInMemory;
   let orderCreateService;
+  let userId = null
 
-  beforeEach(() => {
+  beforeEach(async () => {
     orderRepositoryInMemory = new OrderRepositoryInMemory();
     orderCreateService = new OrderCreateService(orderRepositoryInMemory);
+
+
+    // const user = {
+    //   name: "User Test",
+    //   email: "user@test.com",
+    //   password: "123"
+    // }
+
+    // const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
+    // userId = id
   });
 
   it("should throw an error if dish or user is not found", async () => {

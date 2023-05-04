@@ -74,7 +74,6 @@ class DishRepositoryInMemory {
     });
     
     this.ingredients.push(...ingredients);
-
     return ingredients;
   }
 

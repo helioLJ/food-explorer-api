@@ -12,13 +12,13 @@ Além disso, a API também conta com a funcionalidade de administrador, que perm
 
 ## Índice
 
-- [Stack utilizada](#stack-utilizada)
-- [Funcionalidades](#funcionalidades)
-- [Variáveis de Ambiente](#variáveis-de-ambiente)
-- [Rodando localmente](#rodando-localmente)
-- [Rodando os testes](#rodando-os-testes)
-- [Documentação da API](#documentação-da-api)
-- [Licença](#licença)
+- [Stack utilizada](#stack-utilizada-⚙️)
+- [Funcionalidades](#funcionalidades-🎯)
+- [Variáveis de Ambiente](#variáveis-de-ambiente-🔑)
+- [Rodando localmente](#rodando-localmente-🏠)
+- [Rodando os testes](#rodando-os-testes-🧪)
+- [Documentação da API](#documentação-da-api-📖)
+- [Licença](#licença-📜)
 
 
 ## Stack utilizada ⚙️

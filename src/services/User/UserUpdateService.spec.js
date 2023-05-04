@@ -13,79 +13,6 @@ describe("User Update Service", () => {
     userUpdateService = new UserUpdateService(userRepositoryInMemory)
   })
 
-  it("should update user name and email", async () => {
-    const user = {
-      name: "User Test",
-      email: "user@test.com",
-      password: "123"
-    }
-
-    const userUpdated = {
-      name: "User Updated",
-      email: "updated@test.com",
-    }
-
-    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
-
-    await userUpdateService.execute(
-      userUpdated.name,
-      userUpdated.email,
-      null,
-      null,
-      id
-    )
-
-    const updatedUser = await userRepositoryInMemory.findById(id)
-
-    expect(updatedUser).toHaveProperty("name", userUpdated.name)
-    expect(updatedUser).toHaveProperty("email", userUpdated.email)
-  })
-
-  it("should update user password", async () => {
-    const hashedPassword = await hash("123", 8)
-
-    const user = {
-      name: "User Test",
-      email: "user@test.com",
-      password: hashedPassword
-    }
-
-    const newPassword = "456"
-
-    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
-
-    await userUpdateService.execute(
-      user.name,
-      user.email,
-      "123",
-      newPassword,
-      id
-    )
-
-    const updatedUser = await userRepositoryInMemory.findById(id)
-
-    const checkNewPassword = await compare(newPassword, updatedUser.password)
-
-    expect(checkNewPassword).toBe(true)
-  })
-
-  it("should not update user with wrong old password", async () => {
-    const user = {
-      name: "User Test",
-      email: "user@test.com",
-      password: "123"
-    }
-
-    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
-
-    await expect(userUpdateService.execute(
-      user.name,
-      user.email,
-      "wrongPassword",
-      "456",
-      id
-    )).rejects.toEqual(new AppError("A senha antiga não confere."))
-  })
 
   it("should not update user with invalid user id", async () => {
     await expect(userUpdateService.execute(
@@ -182,5 +109,79 @@ describe("User Update Service", () => {
       "456",
       id
     )).rejects.toEqual(new AppError("Preencha a senha antiga e a nova para mudar sua senha."))
+  })
+
+  it("should not update user with wrong old password", async () => {
+    const user = {
+      name: "User Test",
+      email: "user@test.com",
+      password: "123"
+    }
+
+    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
+
+    await expect(userUpdateService.execute(
+      user.name,
+      user.email,
+      "wrongPassword",
+      "456",
+      id
+    )).rejects.toEqual(new AppError("A senha antiga não confere."))
+  })
+
+  it("should update user name and email", async () => {
+    const user = {
+      name: "User Test",
+      email: "user@test.com",
+      password: "123"
+    }
+
+    const userUpdated = {
+      name: "User Updated",
+      email: "updated@test.com",
+    }
+
+    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
+
+    await userUpdateService.execute(
+      userUpdated.name,
+      userUpdated.email,
+      null,
+      null,
+      id
+    )
+
+    const updatedUser = await userRepositoryInMemory.findById(id)
+
+    expect(updatedUser).toHaveProperty("name", userUpdated.name)
+    expect(updatedUser).toHaveProperty("email", userUpdated.email)
+  })
+
+  it("should update user password", async () => {
+    const hashedPassword = await hash("123", 8)
+
+    const user = {
+      name: "User Test",
+      email: "user@test.com",
+      password: hashedPassword
+    }
+
+    const newPassword = "456"
+
+    const { id } = await userRepositoryInMemory.create(user.name, user.email, user.password)
+
+    await userUpdateService.execute(
+      user.name,
+      user.email,
+      "123",
+      newPassword,
+      id
+    )
+
+    const updatedUser = await userRepositoryInMemory.findById(id)
+
+    const checkNewPassword = await compare(newPassword, updatedUser.password)
+
+    expect(checkNewPassword).toBe(true)
   })
 })

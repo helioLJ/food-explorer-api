@@ -22,6 +22,11 @@ describe("User Show Service", () => {
     userId = id
   })
 
+  it("should throw error when user is not found", async () => {
+    const wrongUserId = "wrong_id"
+    await expect(userShowService.execute(wrongUserId)).rejects.toEqual(new AppError("Usuário não encontrado.", 404))
+  })
+
   it("should show user data", async () => {
     const user = await userShowService.execute(userId)
 
@@ -29,11 +34,5 @@ describe("User Show Service", () => {
     expect(user).toHaveProperty("name", "User Test")
     expect(user).toHaveProperty("email", "user@test.com")
     expect(user).not.toHaveProperty("password")
-  })
-
-  it("should throw error when user is not found", async () => {
-    const wrongUserId = "wrong_id"
-
-    await expect(userShowService.execute(wrongUserId)).rejects.toEqual(new AppError("Usuário não encontrado.", 404))
   })
 })

@@ -11,6 +11,28 @@ describe("Dish Update Service", () => {
     dishUpdateService = new DishUpdateService(dishRepositoryInMemory);
   });
 
+  it("should not update dish if dish not found", async () => {
+    const newName = "Updated test dish";
+    const newDescription = "Updated test description";
+    const newImageUrl = "http://test.com/updated-image.jpg";
+    const newPrice = 15.5;
+    const newCategory = "Updated test category";
+    const newIngredients = ["Ingredient 3", "Ingredient 4"];
+    const dishId = 999; // non-existent dish id
+    
+    await expect(
+      dishUpdateService.execute(
+        newName,
+        newDescription,
+        newImageUrl,
+        newPrice,
+        newCategory,
+        newIngredients,
+        dishId
+      )
+    ).rejects.toEqual(new AppError("Prato não encontrado.", 404));
+  });
+  
   it("should not update dish without name", async () => {
     const dish = {
       id: 201,
@@ -148,5 +170,4 @@ describe("Dish Update Service", () => {
     expect(updatedDish.category).toBe(newCategory);
     expect(ingredientsNames).toEqual(newIngredients);
   });
-  
 });

@@ -18,14 +18,12 @@ class DishCreateService {
 
     const dishCreated = await this.dishRepository.create(name, description, image_url, price, category)
 
-
     const ingredientsInsert = ingredients.map(ingredient => {
       return {
         dish_id: dishCreated,
         name: ingredient
       }
     })
-
     await this.dishRepository.insertIngredients(ingredientsInsert)
   }
 }
