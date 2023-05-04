@@ -2,6 +2,7 @@ const AppError = require("../../utils/AppError");
 const FavoriteCreateService = require("./FavoriteCreateService");
 const FavoriteRepositoryInMemory = require("../../repositories/FavoriteRepositoryInMemory");
 
+
 describe("FavoriteCreateService", () => {
   let favoriteRepositoryInMemory;
   let favoriteCreateService;

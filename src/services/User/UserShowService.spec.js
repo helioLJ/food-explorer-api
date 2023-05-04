@@ -2,6 +2,7 @@ const AppError = require("../../utils/AppError")
 const UserShowService = require("./UserShowService")
 const UserRepositoryInMemory = require("../../repositories/UserRepositoryInMemory")
 
+
 describe("User Show Service", () => {
   let userRepositoryInMemory = null
   let userShowService = null

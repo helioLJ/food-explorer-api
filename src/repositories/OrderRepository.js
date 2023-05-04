@@ -1,5 +1,6 @@
 const knex = require("../database/knex");
 
+
 class OrderRepository {
   async create(dish_id, user_id) {
     const [order_id] = await knex("orders")

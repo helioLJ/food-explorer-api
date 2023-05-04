@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class UserDeleteService {
   constructor(userRepository) {
     this.userRepository = userRepository

@@ -1,5 +1,6 @@
 const DishIndexService = require('./DishIndexService');
 
+
 describe('DishIndexService', () => {
   let dishRepository;
   let dishIndexService;
@@ -83,5 +84,4 @@ describe('DishIndexService', () => {
       expect(dishRepositoryMock.queryByPrice).not.toHaveBeenCalled();
     });
   });
-
 })

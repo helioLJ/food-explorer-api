@@ -2,6 +2,7 @@ const AppError = require("../../utils/AppError");
 const OrderUpdateService = require("./OrderUpdateService");
 const OrderRepositoryInMemory = require("../../repositories/OrderRepositoryInMemory");
 
+
 describe("OrderUpdateService", () => {
   let orderRepositoryInMemory;
   let orderUpdateService;
@@ -33,10 +34,21 @@ describe("OrderUpdateService", () => {
     );
   });
 
+  it("should throw an error if quantity is less than 1", async () => {
+    const dishId = 201;
+    const orderId = 201;
+    const quantity = 0;
+    const status = null;
+  
+    await expect(orderUpdateService.execute(dishId, orderId, quantity, status)).rejects.toEqual(
+      new AppError("Quantidade menor que 1, se quiser deletar o prato use o método Delete.", 401)
+    );
+  });
+
   it("should update order status when status is provided", async () => {
     const dishId = 201;
     const orderId = 201;
-    const quantity = null;
+    const quantity = 1;
     const status = "Entregue";
 
     await orderUpdateService.execute(dishId, orderId, quantity, status);

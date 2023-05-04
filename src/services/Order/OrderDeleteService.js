@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class OrderDeleteService {
   constructor(orderRepository) {
     this.orderRepository = orderRepository
@@ -19,7 +20,6 @@ class OrderDeleteService {
     }
 
     await this.orderRepository.delete(dish_id, order_id)
-
   }
 }
 

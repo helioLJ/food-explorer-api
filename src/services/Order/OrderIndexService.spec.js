@@ -1,6 +1,7 @@
 const OrderIndexService = require('./OrderIndexService');
 const OrderRepositoryInMemory = require('../../repositories/OrderRepositoryInMemory');
 
+
 describe('OrderIndexService', () => {
   let orderRepositoryInMemory;
   let orderIndexService;

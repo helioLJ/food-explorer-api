@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class OrderUpdateService {
   constructor(orderRepository) {
     this.orderRepository = orderRepository
@@ -8,6 +9,10 @@ class OrderUpdateService {
   async execute(dish_id, order_id, quantity, status) {
 
     const dish = await this.orderRepository.verifyDish(dish_id)
+
+    if(quantity < 1) {
+      throw new AppError("Quantidade menor que 1, se quiser deletar o prato use o método Delete.", 401)
+    }
 
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)

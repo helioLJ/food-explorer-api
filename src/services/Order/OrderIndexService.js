@@ -13,7 +13,6 @@ class OrderIndexService {
       return { order, dishes }
     }))
 
-
     return ordersWithDishes
   }
 }

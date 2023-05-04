@@ -1,5 +1,6 @@
 const knex = require("../database/knex");
 
+
 class FavoriteRepository {
   async verifyDish(dish_id) {
     return await knex("dishes").where("id", dish_id).first()

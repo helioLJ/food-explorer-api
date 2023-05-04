@@ -7,6 +7,7 @@ const FavoriteCreateService = require("../services/Favorite/FavoriteCreateServic
 const FavoriteDeleteService = require("../services/Favorite/FavoriteDeleteService")
 const FavoriteIndexService = require("../services/Favorite/FavoriteIndexService")
 
+
 class FavoritesController {
   async create(request, response) {
     const user_id = request.user.id
@@ -36,7 +37,6 @@ class FavoritesController {
 
     return response.status(200).json(dishes);
   }
-
 }
 
 

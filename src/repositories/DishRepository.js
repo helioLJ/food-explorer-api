@@ -1,5 +1,6 @@
 const knex = require("../database/knex");
 
+
 class DishRepository {
   async findByName(name) {
     return await knex("dishes").where("name", name).first();

@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class FavoriteDeleteService {
   constructor(favoriteRepository) {
     this.favoriteRepository = favoriteRepository

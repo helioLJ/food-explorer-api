@@ -1,5 +1,6 @@
 const knex = require("../database/knex");
 
+
 class UserRepository {
   async findByEmail(email) {
     return await knex("users").where("email", email).first();

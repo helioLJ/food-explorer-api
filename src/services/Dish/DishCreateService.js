@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class DishCreateService {
   constructor(dishRepository) {
     this.dishRepository = dishRepository

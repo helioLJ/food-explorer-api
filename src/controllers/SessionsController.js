@@ -4,6 +4,7 @@ const authConfig = require("../configs/auth")
 const { sign } = require("jsonwebtoken")
 const UserRepository = require("../repositories/UserRepository")
 
+
 class SessionsController {
   async create(request, response) {
     const { email, password } = request.body

@@ -1,6 +1,7 @@
 const FavoriteIndexService = require('./FavoriteIndexService');
 const FavoriteRepositoryInMemory = require('../../repositories/FavoriteRepositoryInMemory');
 
+
 describe('FavoriteIndexService', () => {
   let favoriteRepositoryInMemory;
   let favoriteIndexService;

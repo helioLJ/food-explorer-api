@@ -1,5 +1,6 @@
 const AppError = require("../../utils/AppError")
 
+
 class DishUpdateService {
   constructor(dishRepository) {
     this.dishRepository = dishRepository
@@ -47,7 +48,6 @@ class DishUpdateService {
 
     await this.dishRepository.insertIngredients(newIngredientsInsert)
     await this.dishRepository.update(dish_id, dish)
-
   }
 }
 
