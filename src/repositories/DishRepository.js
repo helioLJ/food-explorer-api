@@ -47,6 +47,12 @@ class DishRepository {
     return await knex("ingredients").insert(ingredientsInsert)
   }
 
+  async deleteIngredientsByDishId(dish_id) {
+    await knex("ingredients")
+      .where({ dish_id })
+      .del();
+  }
+
   async getIngredients(dish_id) {
     return await knex("ingredients").where("dish_id", dish_id)
   }

@@ -39,19 +39,21 @@ describe("Dish Show Service", () => {
     );
     const ingredientsInsert = dish.ingredients.map(ingredient => {
       return {
-        dish_id: createdDish.id,
+        dish_id: createdDish,
         name: ingredient
       }
     })
     const createdIngredients = await dishRepositoryInMemory.insertIngredients(ingredientsInsert)
     const ingredientsArray = createdIngredients.map(ing => ing.name)
 
+    const foundDish = await dishRepositoryInMemory.findById(createdDish)
+
     const dishWithIngredients = {
-      ...createdDish,
+      ...foundDish,
       ingredients: ingredientsArray,
     };
 
-    const result = await dishShowService.execute(createdDish.id);
+    const result = await dishShowService.execute(createdDish);
 
     expect(result).toEqual(dishWithIngredients);
   });

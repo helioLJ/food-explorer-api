@@ -37,9 +37,9 @@ describe("DishDeleteService", () => {
       dish.ingredients
     )
 
-    await dishDeleteService.execute(createdDish.id)
+    await dishDeleteService.execute(createdDish)
 
-    const deletedDish = await dishRepositoryInMemory.findById(createdDish.id)
+    const deletedDish = await dishRepositoryInMemory.findById(createdDish)
     expect(deletedDish).toBeUndefined()
   })
 })

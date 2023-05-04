@@ -8,12 +8,12 @@ class DishUpdateService {
 
   async execute(name, description, image_url, price, category, ingredients, dish_id) {
 
-    if (!name || !image_url || !price || ingredients.length === 0) {
+    if (!name || !price || ingredients.length === 0) {
       throw new AppError("Preencha os campos obrigatórios.")
     }
 
     const dishName = await this.dishRepository.findByName(name)
-    if (dishName && dishName.id === dish_id) {
+    if (dishName && dishName.id != dish_id) {
       throw new AppError("Já existe um prato cadastrado com esse nome.", 409);
     }
 
@@ -28,25 +28,18 @@ class DishUpdateService {
     dish.price = price
     dish.category = category
 
-    const currentIngredients = await this.dishRepository.getIngredients(dish_id)
-    const newIngredientsInsert = ingredients.filter(ingredient => {
-      return !currentIngredients.some(currentIngredient => currentIngredient.name === ingredient);
-    }).map(ingredient => {
+    await this.dishRepository.deleteIngredientsByDishId(dish_id);
+
+    const ingredientsInsert = ingredients.map((ingredient) => {
       return {
         dish_id,
         name: ingredient
       };
     });
-    const currentIngredientsDelete = currentIngredients.filter(currentIngredient => {
-      return !ingredients.some(ingredient => ingredient === currentIngredient.name);
-    });
-    if (currentIngredientsDelete.length > 0) {
-      await Promise.all(currentIngredientsDelete.map(currentIngredient => {
-        return this.dishRepository.findIngredientById(currentIngredient.id)
-      }));
-    }
 
-    await this.dishRepository.insertIngredients(newIngredientsInsert)
+
+    await this.dishRepository.insertIngredients(ingredientsInsert);
+
     await this.dishRepository.update(dish_id, dish)
   }
 }

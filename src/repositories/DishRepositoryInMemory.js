@@ -1,6 +1,13 @@
 class DishRepositoryInMemory {
   constructor() {
-    this.dishes = [];
+    this.dishes = [{
+      name: "Test Dish 1",
+      description: "Test description",
+      image_url: "",
+      price: 10.5,
+      category: "Test category",
+      id: 201
+    }];
     this.ingredients = [];
   }
 
@@ -15,7 +22,7 @@ class DishRepositoryInMemory {
   async create(name, description, image_url, price, category) {
     const dish = { id: this.dishes.length + 1, name, description, image_url, price, category };
     this.dishes.push(dish);
-    return dish;
+    return dish.id;
   }
 
   async update(dish_id, updatedDish) {
@@ -65,11 +72,15 @@ class DishRepositoryInMemory {
         ...i
       })
     });
-
+    
     this.ingredients.push(...ingredients);
 
     return ingredients;
   }
+
+  async deleteIngredientsByDishId(dish_id) {
+    this.ingredients = this.ingredients.filter(ingredient => ingredient.dish_id !== dish_id);
+}
 
   async getIngredients(dish_id) {
     return this.ingredients.filter(i => i.dish_id === dish_id);
