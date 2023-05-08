@@ -12,21 +12,25 @@ Além disso, a API também conta com a funcionalidade de administrador, que perm
 
 ## Índice
 
-- [Stack utilizada](#stack-utilizada-⚙️)
-- [Funcionalidades](#funcionalidades-🎯)
-- [Variáveis de Ambiente](#variáveis-de-ambiente-🔑)
-- [Rodando localmente](#rodando-localmente-🏠)
-- [Rodando os testes](#rodando-os-testes-🧪)
-- [Documentação da API](#documentação-da-api-📖)
-- [Licença](#licença-📜)
+- [Stack utilizada](#stack-utilizada)
+- [Funcionalidades](#funcionalidades)
+- [Variáveis de Ambiente](#variáveis-de-ambiente)
+- [Rodando localmente](#rodando-localmente)
+- [Rodando os testes](#rodando-os-testes)
+- [Apêndice](#apêndice)
+- [Documentação da API](#documentação-da-api)
+- [Licença](#licença)
 
 
-## Stack utilizada ⚙️
+## Stack utilizada
 
 
-Node.js, Express, SQLite
+⚙️ Node.js, Express, SQLite
 
-## Funcionalidades 🎯
+## Funcionalidades
+
+
+Funcionalidades da API 🎯
 
 - Criar, editar, visualizar e deletar Usuário
 - Autenticação de Usuário
@@ -35,17 +39,17 @@ Node.js, Express, SQLite
 - Criar um Pedido com um Prato, adicionar um Prato ao pedido ou alterar a quantidade de algum Prato no Pedido, excluir um Prato do Pedido, visualizar o Pedido detalhado e o Histórico de Pedidos
 
 
-## Variáveis de Ambiente 🔑
+## Variáveis de Ambiente
 
-Para rodar esse projeto, você vai precisar adicionar só uma variável de ambiente, como mostra o arquivo `env.example`
+🔑 Para rodar esse projeto, você vai precisar adicionar só uma variável de ambiente, como mostra o arquivo `env.example`
 
 ```env
   AUTH_SECRET=
 ```
 
-## Rodando localmente 🏠
+## Rodando localmente
 
-Clone o projeto
+🏠 Clone o projeto
 
 ```bash
   git clone https://github.com/helioLJ/food-explorer-api
@@ -70,18 +74,26 @@ Inicie o servidor
 ```
 
 
-## Rodando os testes 🧪
+## Rodando os testes
 
-Para rodar os testes, rode o seguinte comando
+🧪 Para rodar os testes, rode o seguinte comando
 
 ```bash
   npm test
 ```
 
 
-## Documentação da API 📖
+## Apêndice
 
-Para alguns métodos da API, é necessário estar Autenticado, então se estiver recebendo algum erro para editar o Usuário, por exemplo, talvez seja porque você não se autenticou.
+| Diagrama Entidade Relacionamento 💡      | Estrutura de Pastas do Projeto 🔍     |
+| ------------- | ------------- |
+| <img alt="Diagrama Entidade Relacionamento" src="https://i.imgur.com/oeiETNw.png"> | <img alt="Estrutura de Pastas do Projeto" src="https://i.imgur.com/Y2buOH0.png"> |
+
+
+
+## Documentação da API
+
+📖 Para alguns métodos da API, é necessário estar Autenticado, então se estiver recebendo algum erro para editar o Usuário, por exemplo, talvez seja porque você não se autenticou.
 
 ### Usuários 👥
 
