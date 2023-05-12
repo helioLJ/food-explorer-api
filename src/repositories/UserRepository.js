@@ -10,7 +10,7 @@ class UserRepository {
     return await knex("users").where("id", user_id).first();
   }
 
-  async create(name, email, password) {
+  async create(name, email, password, isAdmin) {
     const [userId] = await knex("users").insert({ name, email, password });
     return { id: userId.id }
   }

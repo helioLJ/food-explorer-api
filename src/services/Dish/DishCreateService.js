@@ -25,6 +25,8 @@ class DishCreateService {
       }
     })
     await this.dishRepository.insertIngredients(ingredientsInsert)
+
+    return dishCreated
   }
 }
 

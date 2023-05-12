@@ -13,9 +13,9 @@ class DishesController {
     const { name, description, image_url, price, category, ingredients } = request.body
 
     const dishCreateService = new DishCreateService(dishRepository)
-    await dishCreateService.execute(name, description, image_url, price, category, ingredients)
+    const createdDish = await dishCreateService.execute(name, description, image_url, price, category, ingredients)
 
-    response.status(201).json({ message: "Prato criado com sucesso!" })
+    response.status(201).json({ message: "Prato criado com sucesso!", id: createdDish  })
   }
 
   async update(request, response) {

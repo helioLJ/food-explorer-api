@@ -24,7 +24,7 @@ class DishUpdateService {
 
     dish.name = name
     dish.description = description
-    dish.image_url = image_url
+    dish.image_url = image_url ?? dish.image_url
     dish.price = price
     dish.category = category
 

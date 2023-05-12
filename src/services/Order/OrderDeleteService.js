@@ -9,7 +9,7 @@ class OrderDeleteService {
   async execute(dish_id, order_id) {
 
     const dish = await this.orderRepository.verifyDish(dish_id)
-
+    
     if (!dish) {
       throw new AppError("Prato não encontrado.", 404)
     }

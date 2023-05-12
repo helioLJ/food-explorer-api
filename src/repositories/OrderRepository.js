@@ -2,7 +2,7 @@ const knex = require("../database/knex");
 
 
 class OrderRepository {
-  async create(dish_id, user_id) {
+  async create(dish_id, user_id, quantity) {
     const [order_id] = await knex("orders")
       .insert({
         user_id,
@@ -11,7 +11,7 @@ class OrderRepository {
     await knex("ordersDishes").insert({
       order_id,
       dish_id,
-      quantity: 1
+      quantity
     })
   }
 
@@ -60,7 +60,7 @@ class OrderRepository {
 
   async getAllDishes(order_id) {
     return await knex("ordersDishes")
-      .select("dishes.name", "ordersDishes.quantity")
+      .select("dishes.id" ,"dishes.name", "dishes.price", "ordersDishes.quantity")
       .join("dishes", "dishes.id", "ordersDishes.dish_id")
       .where({ order_id });
   }

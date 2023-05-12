@@ -11,10 +11,11 @@ const OrderUpdateService = require("../services/Order/OrderUpdateService")
 class OrdersController {
   async create(request, response) {
     const { dish_id } = request.params
+    const { quantity } = request.body
     const user_id = request.user.id
 
     const orderCreateService = new OrderCreateService(orderRepository)
-    await orderCreateService.execute(dish_id, user_id)
+    await orderCreateService.execute(dish_id, user_id, quantity)
 
     response.status(201).json({ message: "Pedido criado com sucesso!" })
   }
@@ -39,8 +40,7 @@ class OrdersController {
   }
 
   async delete(request, response) {
-    const { dish_id } = request.body;
-    const { order_id } = request.params;
+    const { order_id, dish_id } = request.params;
 
     const orderDeleteService = new OrderDeleteService(orderRepository)
     await orderDeleteService.execute(dish_id, order_id)
