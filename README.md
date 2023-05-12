@@ -12,14 +12,14 @@ Além disso, a API também conta com a funcionalidade de administrador, que perm
 
 ## Índice
 
-- [Stack utilizada](#stack-utilizada)
-- [Funcionalidades](#funcionalidades)
-- [Variáveis de Ambiente](#variáveis-de-ambiente)
-- [Rodando localmente](#rodando-localmente)
-- [Rodando os testes](#rodando-os-testes)
-- [Apêndice](#apêndice)
-- [Documentação da API](#documentação-da-api)
-- [Licença](#licença)
+- [Stack utilizada ⚙️](#stack-utilizada)
+- [Funcionalidades 🎯](#funcionalidades)
+- [Variáveis de Ambiente 🔑](#variáveis-de-ambiente)
+- [Rodando localmente 🏠](#rodando-localmente)
+- [Rodando os testes 🧪](#rodando-os-testes)
+- [Apêndice 🔍](#apêndice)
+- [Documentação da API 📖](#documentação-da-api)
+- [Licença 📜](#licença)
 
 
 ## Stack utilizada
@@ -29,8 +29,6 @@ Além disso, a API também conta com a funcionalidade de administrador, que perm
 
 ## Funcionalidades
 
-
-Funcionalidades da API 🎯
 
 - Criar, editar, visualizar e deletar Usuário
 - Autenticação de Usuário
@@ -458,6 +456,6 @@ Inicie o servidor
 	}
 ]
 ```
-## Licença 📜
+## Licença
 
-[MIT](./LICENSE)
+- 📜 [MIT](./LICENSE)
