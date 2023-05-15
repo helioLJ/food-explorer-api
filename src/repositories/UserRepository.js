@@ -12,13 +12,6 @@ class UserRepository {
 
   async create(name, email, password) {
     const [userId] = await knex("users").insert({ name, email, password });
-    
-    if (userId === 1) {
-      const user = await knex("users").where("id", userId).first()
-      user.isAdmin = true
-      await knex("users").where("id", userId).update(user);
-    }
-    
     return { id: userId.id }
   }
 
