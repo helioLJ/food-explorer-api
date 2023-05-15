@@ -4,7 +4,7 @@ class OrderRepositoryInMemory {
       {
         id: 201,
         user_id: 201,
-        status: "Pendente",
+        status: "Pendente"
       }
     ];
     this.ordersDishes = [

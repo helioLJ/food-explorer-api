@@ -24,7 +24,14 @@ class OrderRepository {
   async getAll(user_id) {
     return await knex("orders")
       .select("*")
-      .where({ user_id });
+      .where({ user_id })
+      .orderBy("created_at", "desc");
+  }
+
+  async getAllForAdmin() {
+    return await knex("orders")
+      .select("*")
+      .orderBy("created_at", "desc");
   }
 
   async verifyDishByOrder(order_id, dish_id) {

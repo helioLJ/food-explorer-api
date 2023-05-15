@@ -16,6 +16,7 @@ class DishRepository {
   }
 
   async update(dish_id, dish) {
+    dish.updated_at = knex.fn.now();
     return await knex("dishes").where("id", dish_id).update(dish);
   }
 

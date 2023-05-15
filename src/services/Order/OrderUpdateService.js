@@ -26,8 +26,6 @@ class OrderUpdateService {
       throw new AppError("Prato não encontrado.", 404)
     }
 
-    console.log("passou!!!!");
-
     const order = await this.orderRepository.findById(order_id)
 
     if (!order) {
