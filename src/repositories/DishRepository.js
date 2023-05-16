@@ -32,6 +32,10 @@ class DishRepository {
     return await knex("dishes").where("category", "like", `%${category}%`);
   }
 
+  async queryByName(name) {
+    return await knex("dishes").where("name", "like", `%${name}%`);
+  }
+
   async queryByIngredient(ingredient) {
     return await knex("dishes")
       .join("ingredients", "dishes.id", "=", "ingredients.dish_id")
