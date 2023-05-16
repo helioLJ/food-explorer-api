@@ -7,7 +7,7 @@ class UserCreateService {
     this.userRepository = userRepository
   }
 
-  async execute(name, email, password) {
+  async execute(name, email, password, isAdmin) {
 
     if (!name || !email || !password) {
       throw new AppError("Todos os campos são obrigatórios.")
@@ -20,7 +20,13 @@ class UserCreateService {
 
     const hashedPassword = await hash(password, 8)
 
-    return await this.userRepository.create(name, email, hashedPassword)
+    if(isAdmin !== true) {
+      isAdmin = false
+    }
+
+    console.log(isAdmin);
+
+    return await this.userRepository.create(name, email, hashedPassword, isAdmin)
   }
 }
 

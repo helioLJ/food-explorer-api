@@ -9,10 +9,10 @@ const UserShowService = require("../services/User/UserShowService")
 
 class UsersController {
   async create(request, response) {
-    const { name, email, password } = request.body
+    const { name, email, password, isAdmin } = request.body
 
     const userCreateService = new UserCreateService(userRepository)
-    await userCreateService.execute(name, email, password)
+    await userCreateService.execute(name, email, password, isAdmin)
 
     return response.status(201).json({ message: "Usuário criado com sucesso!" })
   }

@@ -106,6 +106,7 @@ Inicie o servidor
 	"name": "John",
 	"email": "john@email.com",
 	"password": "123"
+	// "isAdmin": true (essa parâmetro é opcional caso queira criar um usuário Admin)
 }
 ```
 
