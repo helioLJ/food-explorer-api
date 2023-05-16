@@ -54,6 +54,10 @@ class DishRepositoryInMemory {
     return this.dishes.filter(dish => dish.category.includes(category));
   }
 
+  async queryByName(name) {
+    return this.dishes.filter(dish => dish.name.includes(name));
+  }
+
   async queryByIngredient(ingredient) {
     const dishIds = this.ingredients
       .filter(i => i.name.includes(ingredient))
